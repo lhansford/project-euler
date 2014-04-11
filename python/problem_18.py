@@ -1,75 +1,34 @@
+def get_max(top, bottom):
+	""" Top is an int, bottom is a list containing two ints. Returns the sum 
+	of top and the larger int in bottom."""
+	return top + max(bottom)
 
-def max_path_sum_brute(pyramid):
-	# route = []
-	# for row in pyramid:
-	# 	route.append(get_highest_position(row))
-	# if check_route(route):
-	# 	return sum([pyramid[row][x] for row, x in enumerate(route)])
-	# else:
-	# 	return sum([pyramid[row][x] for row, x in enumerate(find_route(pyramid,route))])
-	routes = []
-	for i, row in enumerate(pyramid):
-		# print routes
-		if i == 0:
-			routes.append([row[0]])
-		else:
-			new_list = []
-			for route in routes:
-				new_list.append(list(route))
-				new_list.append(list(route))
-			routes = new_list
-			for j, route in enumerate(routes):
-					if j % 2 == 0:
-						route.append(row[j/2])
-					else:
-						try:
-							route.append(row[j/2+1])
-						
-	print routes
+def get_max_path_sum(pyramid):
+	if len(pyramid) == 1:
+		return pyramid[0][0]
+	elif len(pyramid) == 2:
+		return get_max(pyramid[0][0], pyramid[1])
+	else:
+		new_pyramid = pyramid[:-2]
+		second_row = pyramid[-2]
+		last_row = pyramid[-1]
+		new_row = []
+		for i in xrange(0,len(last_row)-1):
+			m = get_max(second_row[i], [last_row[i], last_row[i+1]])
+			new_row.append(m)
+		new_pyramid.append(new_row)
+		return get_max_path_sum(new_pyramid)
 
 
 
-def check_route(route):
-	previous = 0
-	for pos in route:
-		if pos < previous or pos > previous + 1:
-			return False
-		previous = pos
-	return True
 
-def find_route(pyramid, route):
-	while check_route(route) != True:
-		print route
-		previous = 0
-		for row, pos in enumerate(route):
-			if pos < previous:
-				route = get_better_diff(pyramid, route, row, pos, previous)
-				break
-			elif pos > previous + 1:
-				route[row] -= 1
-				break
-			previous = pos
-	return route
-
-def get_highest_position(row):
-	highest = 0
-	position = 0
-	for i,x in enumerate(row):
-		if x > highest:
-			highest = x
-			position = i
-	return position
-
-
-pyramid_1 = [[3], 
-[7,4], 
-[2, 4, 6], [8, 5, 9, 3]
-]
+pyramid_1 = [[3], [7,4], [2, 4, 6], [8, 5, 9, 3]]
 
 pyramid_2 = [
 	[75],
 	[95, 64],
 	[17, 47, 82],
+	[18, 35, 87, 10],
 	[20, 04, 82, 47, 65],
 	[19, 01, 23, 75, 03, 34],
 	[88, 02, 77, 73, 07, 63, 67],
@@ -83,4 +42,4 @@ pyramid_2 = [
 	[04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23],
 ]
 
-print max_path_sum_brute(pyramid_1)
+print get_max_path_sum(pyramid_2)
