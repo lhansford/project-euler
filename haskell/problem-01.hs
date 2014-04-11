@@ -1,0 +1,1 @@
+multiplesOf3And5 limit = sum [x | x <- [1..(limit-1)], x `mod` 5 == 0 || x `mod` 3 == 0]
