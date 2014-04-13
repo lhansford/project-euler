@@ -1,36 +1,57 @@
 from __future__ import division
 from math import sqrt
-from collections import OrderedDict
+from itertools import permutations
 
-def get_cyclical_nums(cycles = OrderedDict()):
-	print cycles
-	tests = [is_triangle_number,is_square_number,is_pentagon_number,is_heptagon_number,is_hexagon_number,is_octagon_number]
-	if len(cycles.keys()) == 6:
-		return cycles
-	elif len(cycles.keys()) == 0:
-		for a in xrange(1000,10000):
-			for test in tests:
-				cycles[a] = test
-				return get_cyclical_nums(cycles)
-	else:
-		prev = str(cycles.keys()[-1])[2:]
-		for a in xrange(1000,10000):
-			if str(a)[:2] == prev:
-				for test in tests:
-					if test not in cycles.values() and test(a):
-						cycles[a] = test
-						return get_cyclical_nums(cycles)
-		return False
+def get_cyclical_nums():
+	tri = get_all_valid_triangle_nums()
+	sqr = get_all_valid_square_nums()
+	pen = get_all_valid_pentagon_nums()
+	hxg = get_all_valid_hexagon_nums()
+	hep = get_all_valid_heptagon_nums()
+	ocg = get_all_valid_octagon_nums()
 
+	polys = [tri, sqr, pen, hxg, hep, ocg]
 
+	perms = permutations(xrange(0,len(polys)))
+	for p in perms:
+		for a in polys[p[0]]:
+			for b in filter_list(a, polys[p[1]]):
+				for c in filter_list(b, polys[p[2]]):
+					for d in filter_list(c, polys[p[3]]):
+						for e in filter_list(d, polys[p[4]]):
+							for f in filter_list(e, polys[p[5]]):
+								if str(a)[:2] == str(f)[2:]:
+									return [a,b,c,d,e,f]
 
+	# for i in xrange(0, len(polys)):
+	# 	for a in polys[i]:
+	# 		prefix = str(a)[2:]
+	# 		for j in xrange(0, len(polys)):
+	# 			if j not in [i]:
+	# 				for b in filter_list(prefix, polys[j]):
+	# 					prefix = str(b)[2:]
+	# 					for k in xrange(0, len(polys)):
+	# 						if k not in [i,j]:
+	# 							for c in filter_list(prefix, polys[k]):
+	# 								prefix = str(c)[2:]
+	# 								for l in xrange(0, len(polys)):
+	# 									if l not in [i,j,k]:
+	# 										for d in filter_list(prefix, polys[l]):
+	# 											prefix = str(d)[2:]
+	# 											for m in xrange(0, len(polys)):
+	# 												if m not in [i,j,k,l]:
+	# 													for e in filter_list(prefix, polys[m]):
+	# 														prefix = str(e)[2:]
+	# 														for n in xrange(0, len(polys)):
+	# 															if n not in [i,j,k,l,m]:
+	# 																for f in filter_list(prefix, polys[n]):
+	# 																	if str(f)[2:] == str(a)[:2]:
+	# 																		print [a,b,c,d,e,f]
+			
 
-	# 	cycles = [a]
-	# 	if str(a)[-2] != "0":
-	# 		for y in xrange(int(str(x)[:2]+"10"),int(str(x)[:2]+"99")):
-	# 			if str(y)[-2] != "0":
-	# 				cycles.append((x,y,int(str(y)[-2:]+str(x)[:2])))
-	# return cycles
+def filter_list(last_num, num_list):
+	prefix = str(last_num)[2:]
+	return [n for n in num_list if str(n)[:2] == prefix]
 
 def is_triangle_number(n):
 	if (sqrt(8*n+1) - 1)/2 % 1 == 0:
@@ -62,5 +83,53 @@ def is_octagon_number(n):
 		return True
 	return False
 
-print get_cyclical_nums()
+def get_all_valid_triangle_nums():
+	#Get all 4 digit tri nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_triangle_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+def get_all_valid_square_nums():
+	#Get all 4 digit square nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_square_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+def get_all_valid_pentagon_nums():
+	#Get all 4 digit pentagon nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_pentagon_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+def get_all_valid_hexagon_nums():
+	#Get all 4 digit hex nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_hexagon_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+def get_all_valid_heptagon_nums():
+	#Get all 4 digit hetpagon nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_heptagon_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+def get_all_valid_octagon_nums():
+	#Get all 4 digit octo nums. Any numbers with 0 on end are disposed of.
+	nums = []
+	for x in xrange(1000,10000):
+		if is_octagon_number(x) and str(x)[2] != '0':
+			nums.append(x)
+	return nums
+
+print sum(get_cyclical_nums())
 		

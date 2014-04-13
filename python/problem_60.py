@@ -34,13 +34,12 @@ def concatenates(combo):
 				return False
 	return True
 
-def find_concatenating_primes(n):
+def find_concatenating_primes(n, test_range):
 	combos = []
-	primes = get_all_primes(1,20000)
+	primes = get_all_primes(2,test_range)
 	for c in combinations(primes, n):
 		if concatenates(c):
-			print combos
 			combos.append(c)
 	return combos
 
-print find_concatenating_primes(5)
+print find_concatenating_primes(5, 10000)

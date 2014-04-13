@@ -12,7 +12,6 @@ def count_longer_numerators(limit):
 	count = 0
 	for x in xrange(1,limit+1):
 		f = create_fraction(x)
-		print f
 		if len(str(f.numerator)) > len(str(f.denominator)):
 			count += 1
 	return count
