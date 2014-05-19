@@ -11,7 +11,7 @@ def get_cyclical_nums():
 	ocg = get_all_valid_octagon_nums()
 
 	polys = [tri, sqr, pen, hxg, hep, ocg]
-
+	
 	perms = permutations(xrange(0,len(polys)))
 	for p in perms:
 		for a in polys[p[0]]:
@@ -22,31 +22,6 @@ def get_cyclical_nums():
 							for f in filter_list(e, polys[p[5]]):
 								if str(a)[:2] == str(f)[2:]:
 									return [a,b,c,d,e,f]
-
-	# for i in xrange(0, len(polys)):
-	# 	for a in polys[i]:
-	# 		prefix = str(a)[2:]
-	# 		for j in xrange(0, len(polys)):
-	# 			if j not in [i]:
-	# 				for b in filter_list(prefix, polys[j]):
-	# 					prefix = str(b)[2:]
-	# 					for k in xrange(0, len(polys)):
-	# 						if k not in [i,j]:
-	# 							for c in filter_list(prefix, polys[k]):
-	# 								prefix = str(c)[2:]
-	# 								for l in xrange(0, len(polys)):
-	# 									if l not in [i,j,k]:
-	# 										for d in filter_list(prefix, polys[l]):
-	# 											prefix = str(d)[2:]
-	# 											for m in xrange(0, len(polys)):
-	# 												if m not in [i,j,k,l]:
-	# 													for e in filter_list(prefix, polys[m]):
-	# 														prefix = str(e)[2:]
-	# 														for n in xrange(0, len(polys)):
-	# 															if n not in [i,j,k,l,m]:
-	# 																for f in filter_list(prefix, polys[n]):
-	# 																	if str(f)[2:] == str(a)[:2]:
-	# 																		print [a,b,c,d,e,f]
 			
 
 def filter_list(last_num, num_list):
