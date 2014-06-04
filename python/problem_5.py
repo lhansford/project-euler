@@ -1,4 +1,3 @@
-
 def find_divisible_1_to_n(divisible_max):
 	digit = 0
 	is_divisible = False
