@@ -63,5 +63,13 @@ public class Basic {
 		}
 		return sum;
 	}
+	
+	/** Return the length of an integer
+	 * @param number
+	 * @return
+	 */
+	public static int getIntLength(int number){
+		return String.valueOf(number).length();
+	}
 
 }
