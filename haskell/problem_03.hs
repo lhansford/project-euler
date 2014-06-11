@@ -12,7 +12,7 @@ ceilingSqrt n = ceiling(sqrt (fromIntegral  n))
 --Returns all prime multiples of a given Int
 getPrimeMultiples :: Int -> [Int]
 getPrimeMultiples n = 
-	[x | x <- [1,2..ceilingSqrt n], n `mod` x == 0 && isPrime x]
+	[x | x <- [3,5..ceilingSqrt n], n `mod` x == 0 && isPrime x]
 
 --Returns True if a given Int is prime, False otherwise
 isPrime :: Int -> Bool
